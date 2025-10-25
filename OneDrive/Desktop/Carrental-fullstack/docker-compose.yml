@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./carrental-backend-main/carrental-backend-main
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./carrental-frontend-main/carrental-frontend-main
+    ports:
+      - "3000:80" # visit http://localhost:3000 to access the frontend
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+# Usage:
+# docker compose up --build
+# The frontend will be available at http://localhost:3000 and the backend at http://localhost:8081
