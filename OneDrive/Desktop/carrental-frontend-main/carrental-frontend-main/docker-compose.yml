@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  crms-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crms-frontend-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    labels:
+      - "com.example.description=CRMS Frontend Application"
+      - "com.example.version=1.0"
+    networks:
+      - crms-network
+
+networks:
+  crms-network:
+    driver: bridge
+
+volumes:
+  crms-frontend-data:
+    driver: local

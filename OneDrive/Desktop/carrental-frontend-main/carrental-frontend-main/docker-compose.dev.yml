@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  crms-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: crms-frontend-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:8080
+    restart: unless-stopped
+    networks:
+      - crms-network
+
+networks:
+  crms-network:
+    driver: bridge
